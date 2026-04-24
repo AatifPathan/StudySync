@@ -2,11 +2,6 @@ import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import * as esbuild from "esbuild";
-import sourceMapperPlugin from "./source-mapper/src/index";
-import { devToolsPlugin } from "./dev-tools/src/vite-plugin";
-import { fullStoryPlugin } from "./fullstory-plugin";
-import { errorInterceptorPlugin } from "./dev-tools/src/vite-error-interceptor";
-import { mediaVersionsPlugin } from "./dev-tools/src/vite-media-versions-plugin";
 import apiRoutes from "vite-plugin-api-routes";
 
 function extractHostname(value: string): string {
@@ -56,41 +51,37 @@ if (process.env.FRONTEND_DOMAIN) {
 	allowedHosts.push(frontendHost);
 	corsOrigins.push(`http://${frontendHost}`, `https://${frontendHost}`);
 }
+
 if (process.env.ALLOWED_ORIGINS) {
 	const origins = process.env.ALLOWED_ORIGINS.split(",");
 	allowedHosts.push(...origins.map(extractHostname));
 	corsOrigins.push(...origins);
 }
+
 if (process.env.VITE_PARENT_ORIGIN) {
 	allowedHosts.push(extractHostname(process.env.VITE_PARENT_ORIGIN));
 	corsOrigins.push(process.env.VITE_PARENT_ORIGIN);
 }
+
 if (allowedHosts.length === 0) {
 	allowedHosts.push("*");
 }
+
 if (corsOrigins.length === 0) {
 	corsOrigins.push("*");
 }
 
 export default defineConfig(({ mode }) => ({
-	// Expose SITE_ID to import.meta.env (same as app id) for client deep links; keep VITE_ as default
 	envPrefix: ["VITE_", "SITE_"],
 
 	plugins: [
-		react({
-			babel: {
-				plugins: [sourceMapperPlugin],
-			},
-		}),
+		react(),
 		apiRoutes({
 			mode: "isolated",
 			configure: "src/server/configure.js",
 			dirs: [{ dir: "./src/server/api", route: "" }],
 			forceRestart: mode === "development",
 		}),
-		...(mode === "development"
-			? [devToolsPlugin() as Plugin, fullStoryPlugin(), errorInterceptorPlugin(), mediaVersionsPlugin() as Plugin]
-			: []),
 		serverBundlePlugin(),
 	],
 
@@ -137,11 +128,11 @@ export default defineConfig(({ mode }) => ({
 
 	optimizeDeps: {
 		include: [
-			'@tanstack/react-query',
-			'react',
-			'react-dom',
-			'firebase/app',
-			'firebase/auth',
+			"@tanstack/react-query",
+			"react",
+			"react-dom",
+			"firebase/app",
+			"firebase/auth",
 		],
 	},
 

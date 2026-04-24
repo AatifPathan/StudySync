@@ -1,4 +1,4 @@
-# V8 App Template
+# StudySync
 
 A modern, production-ready web application template built with Vite, React, and TypeScript. Designed for AI-assisted development with component introspection, layout systems, and excellent developer experience.
 
@@ -291,22 +291,4 @@ export default defineConfig({
 5. Run linting and tests
 6. Submit a pull request
 
-## 📄 License
 
-MIT License - feel free to use this template for any project.
-
-## 🙏 Acknowledgments
-
-Built with amazing open-source tools:
-
-- [Vite](https://vitejs.dev/)
-- [React](https://react.dev/)
-- [shadcn/ui](https://ui.shadcn.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [Vitest](https://vitest.dev/)
-
----
-
-**Happy coding! 🎉**

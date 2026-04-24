@@ -314,15 +314,28 @@ function FlashcardsSection() {
             <Layers size={36} className="mb-3 opacity-20" />
             <p className="font-medium text-foreground">No flashcard decks yet</p>
             <p className="text-sm mt-1">Create your first deck to start studying with flashcards.</p>
-            <Button size="sm" onClick={() => setShowAddDeck(true)} className="gap-2 mt-4"><Plus size={14} /> New Deck</Button>
+            <Button
+              size="sm"
+              onClick={() => setShowAddDeck(true)}
+              className="gap-2 mt-4"
+            >
+              <Plus size={14} /> New Deck
+            </Button>
           </div>
         )}
+      
+        {decks.map((deck) => (
           <Card key={deck.id} className="hover:shadow-md transition-shadow">
             <CardHeader className="pb-2">
               <div className="flex items-start justify-between">
                 <div>
                   <CardTitle className="text-base">{deck.name}</CardTitle>
-                  <Badge variant="outline" className={`text-xs mt-1 ${SUBJECT_COLORS[deck.subject] ?? ''}`}>{deck.subject}</Badge>
+                  <Badge
+                    variant="outline"
+                    className={`text-xs mt-1 ${SUBJECT_COLORS[deck.subject] ?? ""}`}
+                  >
+                    {deck.subject}
+                  </Badge>
                 </div>
                 <div className="text-right">
                   <p className="text-2xl font-bold text-primary">{deck.cards.length}</p>
@@ -330,13 +343,26 @@ function FlashcardsSection() {
                 </div>
               </div>
             </CardHeader>
+      
             <CardContent className="pt-0 flex gap-2">
-              <Button size="sm" variant="outline" className="flex-1 gap-1 text-xs"
-                onClick={() => { setSelectedDeck(deck); setShowAddCard(true); }}>
+              <Button
+                size="sm"
+                variant="outline"
+                className="flex-1 gap-1 text-xs"
+                onClick={() => {
+                  setSelectedDeck(deck);
+                  setShowAddCard(true);
+                }}
+              >
                 <Plus size={12} /> Add Card
               </Button>
-              <Button size="sm" className="flex-1 gap-1 text-xs" onClick={() => startQuiz(deck)}
-                disabled={deck.cards.length === 0}>
+      
+              <Button
+                size="sm"
+                className="flex-1 gap-1 text-xs"
+                onClick={() => startQuiz(deck)}
+                disabled={deck.cards.length === 0}
+              >
                 <Brain size={12} /> Quiz Me
               </Button>
             </CardContent>
